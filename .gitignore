@@ -28,4 +28,5 @@ Makefile*
 *.exe
 *.out
 *.app
-
+/Arkanoid
+/Arkanoid.pro.user

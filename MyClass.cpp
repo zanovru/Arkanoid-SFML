@@ -44,3 +44,21 @@ RectangleShape Platform::getPlatform() const
 {
     return shape;
 }
+
+void Platform::update()
+{
+    shape.move(speed);
+    if(Keyboard::isKeyPressed(Keyboard::Key::Left) &&
+            (shape.getPosition().x - shape.getSize().x / 2.f) > 0)
+    {
+        speed.x = -PLATFORM_SPEED;
+    }
+    else if(Keyboard::isKeyPressed(Keyboard::Key::Right) &&
+            (shape.getPosition().x + shape.getSize().x / 2.f) < WINDOW_WIDTH)
+    {
+        speed.x = PLATFORM_SPEED;
+    }
+    else speed.x = 0;
+
+
+}

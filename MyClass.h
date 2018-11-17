@@ -30,5 +30,6 @@ private:
 public:
     Platform(float dx, float dy);
     RectangleShape getPlatform() const;
+    void update();
 
 };

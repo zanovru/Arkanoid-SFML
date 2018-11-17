@@ -24,6 +24,7 @@ int main()
         }
         window.clear(Color::Black);
         ball.update();
+        platform.update();
         window.draw(platform.getPlatform());
         window.draw(ball.getCircle());
         window.display();
