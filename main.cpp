@@ -1,9 +1,13 @@
 #include <SFML/Graphics.hpp>
+#include <vector>
 #include "MyClass.h"
 using namespace std;
 using namespace sf;
 
-
+//#TODO
+//1. Окно Game over
+//2. Окно Начальной заставки
+//3. Загрузка текстур блоков, мяча и платформы
 
 int main()
 {
@@ -23,10 +27,11 @@ int main()
             }
         }
         window.clear(Color::Black);
-        ball.update();
+        ball.update(window);
         platform.update();
-        window.draw(platform.getPlatform());
-        window.draw(ball.getCircle());
+        testIntersection(platform, ball);
+        window.draw(platform.getShape());
+        window.draw(ball.getShape());
         window.display();
 
     }
@@ -34,3 +39,5 @@ int main()
 
     return 0;
 }
+
+

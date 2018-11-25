@@ -13,22 +13,18 @@ Ball::Ball(float dx, float dy)
     shape.setFillColor(Color::Magenta);
     shape.setOrigin(BALL_RADIUS,BALL_RADIUS);
 }
-void Ball::update()
+void Ball::update(RenderWindow &window)
 {
     shape.move(speed);
-    if(shape.getPosition().x - BALL_RADIUS < 0)
+    if(left() < 0)
         speed.x = BALL_SPEED;
-    else if(shape.getPosition().x + BALL_RADIUS > WINDOW_WIDTH)
+    else if(right() > WINDOW_WIDTH)
         speed.x = -BALL_SPEED;
-    if(shape.getPosition().y - BALL_RADIUS < 0)
+    if(up() < 0)
         speed.y = BALL_SPEED;
-    else if(shape.getPosition().y + BALL_RADIUS > WINDOW_HEIGHT)
-        speed.y = -BALL_SPEED;
-}
+    if(down() > WINDOW_HEIGHT)
+        window.close();
 
-CircleShape Ball::getCircle() const
-{
-    return shape;
 }
 
 Platform::Platform(float dx, float dy)
@@ -40,25 +36,42 @@ Platform::Platform(float dx, float dy)
 
 }
 
-RectangleShape Platform::getPlatform() const
-{
-    return shape;
-}
-
 void Platform::update()
 {
     shape.move(speed);
-    if(Keyboard::isKeyPressed(Keyboard::Key::Left) &&
-            (shape.getPosition().x - shape.getSize().x / 2.f) > 0)
-    {
+    if(Keyboard::isKeyPressed(Keyboard::Key::Left) && left() > 0)
         speed.x = -PLATFORM_SPEED;
-    }
-    else if(Keyboard::isKeyPressed(Keyboard::Key::Right) &&
-            (shape.getPosition().x + shape.getSize().x / 2.f) < WINDOW_WIDTH)
-    {
+    else if(Keyboard::isKeyPressed(Keyboard::Key::Right) && right() < WINDOW_WIDTH)
         speed.x = PLATFORM_SPEED;
-    }
     else speed.x = 0;
 
+
+}
+
+Brick::Brick(float dx, float dy)
+{
+    shape.setPosition(dx, dy);
+    shape.setSize({BRICK_WIDTH, BRICK_HEIGHT});
+    shape.setOrigin(BRICK_WIDTH/2.f, BRICK_HEIGHT/2.f);
+    shape.setFillColor(Color::Blue);
+
+}
+
+
+
+template <class T1, class T2>
+bool isIntersecting(T1& obj1, T2& obj2)
+{
+    return obj1.left() <= obj2.right() && obj1.right() >= obj2.left()
+            && obj1.down() >= obj2.up() && obj1.up() <= obj2.down();
+}
+
+void testIntersection(Platform& platf, Ball &ball)
+{
+    if(!isIntersecting(platf, ball)) return;
+    ball.getSpeed().y = -BALL_SPEED;
+    if(platf.x() > ball.x())
+        ball.getSpeed().x = -BALL_SPEED;
+    else ball.getSpeed().x = BALL_SPEED;
 
 }
