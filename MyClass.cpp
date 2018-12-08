@@ -2,12 +2,6 @@
 
 Ball::Ball(float dx, float dy)
 {
-    /*Image image;
-    image.loadFromFile("/Users/vitalyruzanov/Desktop/imgutility.jpeg");
-    Texture texture;
-    texture.loadFromImage(image);
-    shape.setTexture(&texture);
-    shape.setTextureRect(IntRect(0,175,WINDOW_WIDTH,WINDOW_HEIGHT));*/
     shape.setPosition(dx,dy);
     shape.setRadius(BALL_RADIUS);
     shape.setFillColor(Color::Magenta);
@@ -66,12 +60,31 @@ bool isIntersecting(T1& obj1, T2& obj2)
             && obj1.down() >= obj2.up() && obj1.up() <= obj2.down();
 }
 
-void testIntersection(Platform& platf, Ball &ball)
+void testIntersection(Platform& platf, Ball& ball)
 {
     if(!isIntersecting(platf, ball)) return;
     ball.getSpeed().y = -BALL_SPEED;
     if(platf.x() > ball.x())
         ball.getSpeed().x = -BALL_SPEED;
     else ball.getSpeed().x = BALL_SPEED;
+
+}
+
+void testIntersection(Brick& brick, Ball& ball)
+{
+    if(!isIntersecting(brick, ball)) return;
+    brick.getIsDestroyed() = true;
+    float intersectLeft = ball.right() - brick.left();
+    float intersectRight = brick.right() - ball.left();
+    float intersectTop = ball.down() - brick.up();
+    float intersectDown = brick.down() - ball.up();
+    bool ballFromLeft = abs(intersectLeft) < abs(intersectRight);
+    bool ballFromTop = abs(intersectTop) < abs(intersectDown);
+    float minIntersectX = ballFromLeft ? intersectLeft : intersectRight;
+    float minIntersectY = ballFromTop ? intersectTop : intersectDown;
+    if (abs(minIntersectX) < abs(minIntersectY))
+        ball.getSpeed().x = ballFromLeft ? -BALL_SPEED : BALL_SPEED;
+    else
+        ball.getSpeed().y = ballFromTop ? -BALL_SPEED : BALL_SPEED;
 
 }

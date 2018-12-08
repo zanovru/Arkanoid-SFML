@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <math.h>
 using namespace sf;
 
 constexpr int WINDOW_WIDTH      = 800;
@@ -11,8 +12,8 @@ constexpr float PLATFORM_HEIGHT = 20.f;
 constexpr float PLATFORM_SPEED  = 8.f;
 constexpr float BRICK_WIDTH     = 60.f;
 constexpr float BRICK_HEIGHT    = 20.f;
-constexpr int BRICKS_X          = 1;
-constexpr int BRICKS_Y          = 1;
+constexpr int BRICKS_X          = 8;
+constexpr int BRICKS_Y          = 4;
 
 
 class Ball
@@ -53,6 +54,7 @@ private:
     bool isDestroyed = false;
 public:
     Brick(float dx, float dy);
+    bool& getIsDestroyed() { return isDestroyed;}
 };
 
 class Platform:public Rectangle
@@ -69,3 +71,4 @@ public:
 
 bool isIntersecting(class A& obj1, class B& obj2);
 void testIntersection(Platform& platf, Ball &ball);
+void testIntersection(Brick& brick, Ball& ball);
