@@ -17,8 +17,11 @@ void Ball::update(RenderWindow &window)
     if(up() < 0)
         speed.y = BALL_SPEED;
     if(down() > WINDOW_HEIGHT)
+    {
         window.close();
+        emit lose();
 
+    }
 }
 
 Platform::Platform(float dx, float dy)

@@ -1,7 +1,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <math.h>
+#include <vector>
+#include "mainwindow.h"
+#include <QObject>
 using namespace sf;
+using namespace std;
 
 constexpr int WINDOW_WIDTH      = 800;
 constexpr int WINDOW_HEIGHT     = 600;
@@ -16,8 +20,9 @@ constexpr int BRICKS_X          = 6;
 constexpr int BRICKS_Y          = 3;
 
 
-class Ball
+class Ball: public QObject
 {
+    Q_OBJECT
 private:
     CircleShape shape;
     Vector2f speed = {BALL_SPEED, -BALL_SPEED};
@@ -32,6 +37,9 @@ public:
     float right() { return x() + shape.getRadius(); }
     float up() { return y() - shape.getRadius(); }
     float down() { return y() + shape.getRadius(); }
+signals:
+    void lose();
+
 };
 
 class Rectangle

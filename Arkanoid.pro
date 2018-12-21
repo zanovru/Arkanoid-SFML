@@ -1,5 +1,7 @@
 QT -= gui
 
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
 CONFIG += c++11
 CONFIG -= app_bundle
 
@@ -26,7 +28,8 @@ DEPENDPATH += "/usr/local/include"
 
 SOURCES += \
         main.cpp \
-    MyClass.cpp
+    MyClass.cpp \
+    mainwindow.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -34,4 +37,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    MyClass.h
+    MyClass.h \
+    mainwindow.h
+
+FORMS += \
+    mainwindow.ui
