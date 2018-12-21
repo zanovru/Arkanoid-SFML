@@ -16,7 +16,7 @@ int main()
     for(int i = 0; i < BRICKS_X; ++i)
         for(int j = 0; j < BRICKS_Y; j++)
         {
-            bricks.emplace_back((i + 1) * (BRICK_WIDTH + 4) + 110 , (j + 1) * (BRICK_HEIGHT + 4));
+            bricks.emplace_back((i + 1) * (BRICK_WIDTH + 10) + 150 , (j + 2) * (BRICK_HEIGHT + 10));
         }
     while(window.isOpen())
     {
@@ -34,7 +34,7 @@ int main()
         platform.update();
         testIntersection(platform, ball);
         for(auto& brick : bricks) testIntersection(brick, ball);
-        bricks.erase(remove_if(begin(bricks), end(bricks), [](Brick& brick){return brick.getIsDestroyed();}),end(bricks));
+        bricks.erase(remove_if(bricks.begin(), bricks.end(), [](Brick& brick){return brick.getIsDestroyed();}), bricks.end());
         window.draw(platform.getShape());
         window.draw(ball.getShape());
         for(auto& brick : bricks) window.draw(brick.getShape());

@@ -12,8 +12,8 @@ constexpr float PLATFORM_HEIGHT = 20.f;
 constexpr float PLATFORM_SPEED  = 8.f;
 constexpr float BRICK_WIDTH     = 60.f;
 constexpr float BRICK_HEIGHT    = 20.f;
-constexpr int BRICKS_X          = 8;
-constexpr int BRICKS_Y          = 4;
+constexpr int BRICKS_X          = 6;
+constexpr int BRICKS_Y          = 3;
 
 
 class Ball
